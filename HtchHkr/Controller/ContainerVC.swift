@@ -152,7 +152,7 @@ extension ContainerVC: CenterVCDelegate {
     
     func hideWhiteCoverView() {
         centerController.view.removeGestureRecognizer(tap)
-        
+
         // TODO: - experiment
         if let whiteCoverView = self.centerController.view.viewWithTag(25) {
             UIView.animate(withDuration: 0.2, animations: {
@@ -161,17 +161,8 @@ extension ContainerVC: CenterVCDelegate {
                 whiteCoverView.removeFromSuperview()
             })
         }
-        
-        
-//        for subview in self.centerController.view.subviews {
-//            if subview.tag == 25 {
-//                UIView.animate(withDuration: 0.2, animations: {
-//                    subview.alpha = 0.0
-//                }, completion: { (finished) in
-//                    subview.removeFromSuperview()
-//                })
-//            }
-//        }
+
+   
     }
     
     func shouldShowShadowForCenterViewController(status: Bool) {
@@ -190,7 +181,7 @@ extension ContainerVC: CenterVCDelegate {
 }
 
 // MARK: - UIStoryboard extension
-private extension UIStoryboard {
+extension UIStoryboard {
     class func mainStoryboard() -> UIStoryboard {
         return UIStoryboard(name: "Main", bundle: Bundle.main)
     }
@@ -201,5 +192,9 @@ private extension UIStoryboard {
     
     class func homeVC() -> HomeVC? {
         return mainStoryboard().instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
+    }
+    
+    class func loginVC() -> LoginVC? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
     }
 }

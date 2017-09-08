@@ -24,5 +24,17 @@ class LeftSidePanelVC: UIViewController {
     }
 
     
+    
+    @IBAction func switchWasToggled(_ sender: Any) {
+
+    }
+    
+    @IBAction func signUpLoginBtnWasPressed(_ sender: Any) {
+        
+        let loginVC = UIStoryboard.loginVC()
+        present(loginVC!, animated: true, completion: nil)
+        
+
+    }
 
 }
