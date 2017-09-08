@@ -24,6 +24,8 @@
 		155ABE5D1F62C269007B7FC3 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155ABE5C1F62C269007B7FC3 /* LoginVC.swift */; };
 		155ABE5F1F62C2AB007B7FC3 /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155ABE5E1F62C2AB007B7FC3 /* Alertable.swift */; };
 		155ABE611F62C30C007B7FC3 /* RoundedCornerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155ABE601F62C30C007B7FC3 /* RoundedCornerTextField.swift */; };
+		1585263C1F62D1C300E0F291 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1585263B1F62D1C000E0F291 /* GoogleService-Info.plist */; };
+		1585263F1F62D32C00E0F291 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1585263E1F62D32C00E0F291 /* DataService.swift */; };
 		FBC4423A213663294C08140E /* Pods_HtchHkr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B66D2189CE007F4E4F7C30DF /* Pods_HtchHkr.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +49,8 @@
 		155ABE5C1F62C269007B7FC3 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		155ABE5E1F62C2AB007B7FC3 /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
 		155ABE601F62C30C007B7FC3 /* RoundedCornerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerTextField.swift; sourceTree = "<group>"; };
+		1585263B1F62D1C000E0F291 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1585263E1F62D32C00E0F291 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		38D469B21DA0DE4809C29A08 /* Pods-HtchHkr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HtchHkr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HtchHkr/Pods-HtchHkr.debug.xcconfig"; sourceTree = "<group>"; };
 		7937D25DF8E8AAFCD1F645B4 /* Pods-HtchHkr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HtchHkr.release.xcconfig"; path = "Pods/Target Support Files/Pods-HtchHkr/Pods-HtchHkr.release.xcconfig"; sourceTree = "<group>"; };
 		B66D2189CE007F4E4F7C30DF /* Pods_HtchHkr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HtchHkr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +89,7 @@
 		155ABE321F6294C0007B7FC3 /* HtchHkr */ = {
 			isa = PBXGroup;
 			children = (
+				1585263D1F62D31700E0F291 /* Services */,
 				155ABE591F62B372007B7FC3 /* Extensions */,
 				155ABE561F62A751007B7FC3 /* Protocols */,
 				155ABE471F629995007B7FC3 /* Model */,
@@ -94,6 +99,7 @@
 				155ABE371F6294C0007B7FC3 /* Main.storyboard */,
 				155ABE3C1F6294C0007B7FC3 /* LaunchScreen.storyboard */,
 				155ABE3A1F6294C0007B7FC3 /* Assets.xcassets */,
+				1585263B1F62D1C000E0F291 /* GoogleService-Info.plist */,
 				155ABE3F1F6294C0007B7FC3 /* Info.plist */,
 			);
 			path = HtchHkr;
@@ -145,6 +151,14 @@
 				155ABE5A1F62B384007B7FC3 /* UIView.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1585263D1F62D31700E0F291 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1585263E1F62D32C00E0F291 /* DataService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		8133C1A256B82FF91CFAB9CF /* Pods */ = {
@@ -227,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				155ABE3E1F6294C0007B7FC3 /* LaunchScreen.storyboard in Resources */,
+				1585263C1F62D1C300E0F291 /* GoogleService-Info.plist in Resources */,
 				155ABE3B1F6294C0007B7FC3 /* Assets.xcassets in Resources */,
 				155ABE391F6294C0007B7FC3 /* Main.storyboard in Resources */,
 			);
@@ -306,6 +321,7 @@
 				155ABE4F1F629CAB007B7FC3 /* CircleView.swift in Sources */,
 				155ABE551F62A539007B7FC3 /* ContainerVC.swift in Sources */,
 				155ABE361F6294C0007B7FC3 /* HomeVC.swift in Sources */,
+				1585263F1F62D32C00E0F291 /* DataService.swift in Sources */,
 				155ABE4B1F629C0B007B7FC3 /* RoundImageView.swift in Sources */,
 				155ABE4D1F629C99007B7FC3 /* RoundedShadowView.swift in Sources */,
 				155ABE341F6294C0007B7FC3 /* AppDelegate.swift in Sources */,
