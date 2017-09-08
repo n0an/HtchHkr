@@ -433,13 +433,13 @@
                                             </connections>
                                         </button>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="u3L-Y6-Am3">
-                                            <rect key="frame" x="-2.5" y="148.5" width="380.5" height="371"/>
+                                            <rect key="frame" x="20" y="148.5" width="335" height="371"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="y4G-OT-U84">
-                                                    <rect key="frame" x="0.0" y="0.0" width="380.5" height="151"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="151"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xoO-g3-oCW">
-                                                            <rect key="frame" x="66.5" y="0.0" width="247.5" height="66"/>
+                                                            <rect key="frame" x="44" y="0.0" width="247.5" height="66"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HTCH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X6C-yf-S9T">
                                                                     <rect key="frame" x="0.0" y="0.0" width="138" height="66"/>
@@ -456,7 +456,7 @@
                                                             </subviews>
                                                         </stackView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up or login to start requesting rides with HTCHHKR: the easiest way to get a lift anywhere!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uwp-q1-4g1">
-                                                            <rect key="frame" x="170" y="66" width="0.0" height="85"/>
+                                                            <rect key="frame" x="0.0" y="66" width="335" height="85"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="85" id="9kl-p2-VmG"/>
                                                             </constraints>
@@ -465,12 +465,9 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="380" id="Vml-uO-Ebt"/>
-                                                    </constraints>
                                                 </stackView>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="myY-Jr-lTe">
-                                                    <rect key="frame" x="0.0" y="171" width="380.5" height="41"/>
+                                                    <rect key="frame" x="0.0" y="171" width="335" height="41"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="l9r-dG-6mY"/>
                                                     </constraints>
@@ -481,7 +478,7 @@
                                                     <color key="tintColor" red="0.84705882349999995" green="0.2784313725" blue="0.1176470588" alpha="1" colorSpace="calibratedRGB"/>
                                                 </segmentedControl>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sFZ-qv-oBn" customClass="RoundedCornerTextField" customModule="HtchHkr" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="231" width="380.5" height="60"/>
+                                                    <rect key="frame" x="0.0" y="231" width="335" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="60" id="rIy-xF-fuV"/>
                                                     </constraints>
@@ -490,7 +487,7 @@
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="36P-uu-uHj" customClass="RoundedCornerTextField" customModule="HtchHkr" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="311" width="380.5" height="60"/>
+                                                    <rect key="frame" x="0.0" y="311" width="335" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="60" id="5E4-L8-BFM"/>
                                                     </constraints>
@@ -518,11 +515,13 @@
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="qZT-XX-p32" secondAttribute="bottom" constant="20" id="3RA-z5-eqU"/>
                                         <constraint firstItem="5X3-rl-9WF" firstAttribute="leading" secondItem="YNP-re-xWU" secondAttribute="leading" constant="20" id="Bij-o1-AB0"/>
+                                        <constraint firstItem="u3L-Y6-Am3" firstAttribute="leading" secondItem="YNP-re-xWU" secondAttribute="leading" constant="20" id="DKx-Hb-dQe"/>
                                         <constraint firstItem="5X3-rl-9WF" firstAttribute="top" secondItem="YNP-re-xWU" secondAttribute="top" constant="30" id="UXo-bB-fz4"/>
                                         <constraint firstAttribute="trailing" secondItem="qZT-XX-p32" secondAttribute="trailing" constant="20" id="cyC-KN-ofI"/>
                                         <constraint firstItem="u3L-Y6-Am3" firstAttribute="centerY" secondItem="YNP-re-xWU" secondAttribute="centerY" id="fC9-It-LDV"/>
                                         <constraint firstItem="qZT-XX-p32" firstAttribute="leading" secondItem="YNP-re-xWU" secondAttribute="leading" constant="20" id="sk4-uy-cRO"/>
                                         <constraint firstItem="u3L-Y6-Am3" firstAttribute="centerX" secondItem="YNP-re-xWU" secondAttribute="centerX" id="std-Aa-VRg"/>
+                                        <constraint firstAttribute="trailing" secondItem="u3L-Y6-Am3" secondAttribute="trailing" constant="20" id="tJk-go-u9c"/>
                                     </constraints>
                                 </view>
                                 <blurEffect style="light"/>
