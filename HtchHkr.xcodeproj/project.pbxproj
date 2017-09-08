@@ -92,8 +92,8 @@
 				155ABE451F629989007B7FC3 /* Controller */,
 				155ABE331F6294C0007B7FC3 /* AppDelegate.swift */,
 				155ABE371F6294C0007B7FC3 /* Main.storyboard */,
-				155ABE3A1F6294C0007B7FC3 /* Assets.xcassets */,
 				155ABE3C1F6294C0007B7FC3 /* LaunchScreen.storyboard */,
+				155ABE3A1F6294C0007B7FC3 /* Assets.xcassets */,
 				155ABE3F1F6294C0007B7FC3 /* Info.plist */,
 			);
 			path = HtchHkr;

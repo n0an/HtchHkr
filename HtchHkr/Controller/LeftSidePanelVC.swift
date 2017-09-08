@@ -19,7 +19,7 @@ class LeftSidePanelVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         
     }
 
