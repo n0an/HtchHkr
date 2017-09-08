@@ -19,6 +19,8 @@ class HomeVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var destinationCircle: CircleView!
     @IBOutlet weak var cancelBtn: UIButton!
     
+    var delegate: CenterVCDelegate?
+    
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,10 @@ class HomeVC: UIViewController, MKMapViewDelegate {
     @IBAction func actionBtnWasPressed(_ sender: Any) {
 //        buttonSelector(forAction: actionForButton)
         actionBtn.animateButton(shouldLoad: true, withMessage: nil)
+    }
+    
+    @IBAction func menuBtnWasPressed(_ sender: Any) {
+        delegate?.toggleLeftPanel()
     }
 
 }
