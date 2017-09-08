@@ -48,17 +48,61 @@ class LoginVC: UIViewController {
         
         FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
             
-            if let error = error{
+            if let error = error, let errorCode = FIRAuthErrorCode(rawValue: error._code) {
+                
+                
+                switch errorCode {
+                case .errorCodeInvalidEmail:
+                    print("Email invalid")
+                    return
+                case .errorCodeEmailAlreadyInUse:
+                    print("Email already in use")
+                    return
+                case .errorCodeWrongPassword:
+                    print("Wrong password")
+                    return
+                default:
+                    print("An unexpected error")
+                }
+                
                 
                 print(error.localizedDescription)
+                
+                
+                
                 // CREATE USER
                 FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
-                    if error != nil {
+                    if let error = error, let errorCode = FIRAuthErrorCode(rawValue: error._code) {
+                        switch errorCode {
+                        case .errorCodeEmailAlreadyInUse:
+                            print("Email already in use")
+                            return
+                        default:
+                            print("An unexpected error")
+                        }
                         
+                    } else {
+                        if let user = user {
+                            var userData = ["provider": user.providerID] as [String: Any]
+                            var isDriver: Bool
+                            
+                            if self.segmentedControl.selectedSegmentIndex == 0 {
+                                isDriver = false
+                            } else {
+                                isDriver = true
+                                
+                                userData.updateValue(true, forKey: "userIsDriver")
+                                userData.updateValue(false, forKey: "isPickupModeEnabled")
+                                userData["driverIsOnTrip"] = false
+                            }
+                            
+                            DataService.instance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: isDriver)
+                        }
+                        print("Sign in success")
+                        self.dismiss(animated: true, completion: nil)
                     }
                 })
                 
-                // TODO: 16:53 Video 12
                 
             } else {
                 // SIGN IN USER
@@ -79,7 +123,7 @@ class LoginVC: UIViewController {
                     DataService.instance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: isDriver)
                 }
                 
-                print("Auth success")
+                print("Sign in success")
                 self.dismiss(animated: true, completion: nil)
             }
             
