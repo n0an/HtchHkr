@@ -15,6 +15,8 @@ let DB_BASE = FIRDatabase.database().reference()
 class DataService {
     static let instance = DataService()
     
+    let currentUser = FIRAuth.auth()?.currentUser
+    
     private var _REF_BASE = DB_BASE
     private var _REF_USERS = DB_BASE.child("Users")
     private var _REF_DRIVERS = DB_BASE.child("Drivers")
