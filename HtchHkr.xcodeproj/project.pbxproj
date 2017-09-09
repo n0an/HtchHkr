@@ -27,6 +27,8 @@
 		1585263C1F62D1C300E0F291 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1585263B1F62D1C000E0F291 /* GoogleService-Info.plist */; };
 		1585263F1F62D32C00E0F291 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1585263E1F62D32C00E0F291 /* DataService.swift */; };
 		18FF50E11F632F1400BBB5EA /* UpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FF50E01F632F1400BBB5EA /* UpdateService.swift */; };
+		18FF50E71F63E73300BBB5EA /* DriverAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FF50E61F63E73300BBB5EA /* DriverAnnotation.swift */; };
+		18FF50E91F63E76F00BBB5EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FF50E81F63E76F00BBB5EA /* Constants.swift */; };
 		FBC4423A213663294C08140E /* Pods_HtchHkr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B66D2189CE007F4E4F7C30DF /* Pods_HtchHkr.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +55,8 @@
 		1585263B1F62D1C000E0F291 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1585263E1F62D32C00E0F291 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		18FF50E01F632F1400BBB5EA /* UpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateService.swift; sourceTree = "<group>"; };
+		18FF50E61F63E73300BBB5EA /* DriverAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverAnnotation.swift; sourceTree = "<group>"; };
+		18FF50E81F63E76F00BBB5EA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		38D469B21DA0DE4809C29A08 /* Pods-HtchHkr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HtchHkr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HtchHkr/Pods-HtchHkr.debug.xcconfig"; sourceTree = "<group>"; };
 		7937D25DF8E8AAFCD1F645B4 /* Pods-HtchHkr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HtchHkr.release.xcconfig"; path = "Pods/Target Support Files/Pods-HtchHkr/Pods-HtchHkr.release.xcconfig"; sourceTree = "<group>"; };
 		B66D2189CE007F4E4F7C30DF /* Pods_HtchHkr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HtchHkr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +107,7 @@
 				155ABE3A1F6294C0007B7FC3 /* Assets.xcassets */,
 				1585263B1F62D1C000E0F291 /* GoogleService-Info.plist */,
 				155ABE3F1F6294C0007B7FC3 /* Info.plist */,
+				18FF50E81F63E76F00BBB5EA /* Constants.swift */,
 			);
 			path = HtchHkr;
 			sourceTree = "<group>";
@@ -127,6 +132,7 @@
 				155ABE4A1F629C0B007B7FC3 /* RoundImageView.swift */,
 				155ABE501F629DC2007B7FC3 /* RoundedShadowButton.swift */,
 				155ABE601F62C30C007B7FC3 /* RoundedCornerTextField.swift */,
+				18FF50E61F63E73300BBB5EA /* DriverAnnotation.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -318,6 +324,7 @@
 				155ABE581F62A76F007B7FC3 /* CenterVCDelegate.swift in Sources */,
 				155ABE511F629DC2007B7FC3 /* RoundedShadowButton.swift in Sources */,
 				18FF50E11F632F1400BBB5EA /* UpdateService.swift in Sources */,
+				18FF50E71F63E73300BBB5EA /* DriverAnnotation.swift in Sources */,
 				155ABE5D1F62C269007B7FC3 /* LoginVC.swift in Sources */,
 				155ABE5B1F62B384007B7FC3 /* UIView.swift in Sources */,
 				155ABE531F62A41F007B7FC3 /* LeftSidePanelVC.swift in Sources */,
@@ -331,6 +338,7 @@
 				155ABE341F6294C0007B7FC3 /* AppDelegate.swift in Sources */,
 				155ABE611F62C30C007B7FC3 /* RoundedCornerTextField.swift in Sources */,
 				155ABE491F6299B0007B7FC3 /* GradientView.swift in Sources */,
+				18FF50E91F63E76F00BBB5EA /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
