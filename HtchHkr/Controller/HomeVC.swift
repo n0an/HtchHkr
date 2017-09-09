@@ -235,6 +235,7 @@ extension HomeVC: MKMapViewDelegate {
                 for mapItem in (response?.mapItems)! {
                     self.matchingItems.append(mapItem as MKMapItem)
                     self.tableView.reloadData()
+                    self.shouldPresentLoadingView(false)
                 }
             }
             
@@ -275,6 +276,8 @@ extension HomeVC: MKMapViewDelegate {
             self.route = response.routes.first
             
             self.mapView.add(self.route.polyline)
+            
+            self.shouldPresentLoadingView(false)
             
         }
     }
@@ -328,6 +331,7 @@ extension HomeVC: UITextFieldDelegate {
         
         if textField == destinationTextField {
             performSearch()
+            shouldPresentLoadingView(true)
             view.endEditing(true)
         }
         
@@ -374,6 +378,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        shouldPresentLoadingView(true)
         
         let passengerCoordinate = locationManager.location?.coordinate
         
