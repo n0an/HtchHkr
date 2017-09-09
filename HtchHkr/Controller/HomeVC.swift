@@ -12,7 +12,7 @@ import RevealingSplashView
 import CoreLocation
 import Firebase
 
-class HomeVC: UIViewController {
+class HomeVC: UIViewController, Alertable {
     
     // MARK: - OUTLETS
     @IBOutlet weak var mapView: MKMapView!
@@ -246,18 +246,22 @@ extension HomeVC: MKMapViewDelegate {
             
             guard error == nil else {
                 print(error!.localizedDescription)
+                self.showAlert(error!.localizedDescription)
+                self.shouldPresentLoadingView(false)
                 return
             }
             
             if response?.mapItems.count == 0 {
-                print("no results!")
+                self.showAlert("no results")
+                
             } else {
                 for mapItem in (response?.mapItems)! {
                     self.matchingItems.append(mapItem as MKMapItem)
                     self.tableView.reloadData()
-                    self.shouldPresentLoadingView(false)
+                    
                 }
             }
+            self.shouldPresentLoadingView(false)
             
         }
     }

@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class LoginVC: UIViewController {
+class LoginVC: UIViewController, Alertable {
     
     // MARK: - OUTLETS
     @IBOutlet weak var emailField: RoundedCornerTextField!
@@ -53,16 +53,16 @@ class LoginVC: UIViewController {
                 
                 switch errorCode {
                 case .errorCodeInvalidEmail:
-                    print("Email invalid")
+                    self.showAlert("Email invalid")
                     return
                 case .errorCodeEmailAlreadyInUse:
-                    print("Email already in use")
+                    self.showAlert("Email already in use")
                     return
                 case .errorCodeWrongPassword:
-                    print("Wrong password")
+                    self.showAlert("Wrong password")
                     return
                 default:
-                    print("An unexpected error")
+                    self.showAlert("An unexpected error")
                 }
                 
                 
@@ -75,10 +75,10 @@ class LoginVC: UIViewController {
                     if let error = error, let errorCode = FIRAuthErrorCode(rawValue: error._code) {
                         switch errorCode {
                         case .errorCodeEmailAlreadyInUse:
-                            print("Email already in use")
+                            self.showAlert("Email already in use")
                             return
                         default:
-                            print("An unexpected error")
+                            self.showAlert("An unexpected error")
                         }
                         
                     } else {
