@@ -36,6 +36,8 @@ class HomeVC: UIViewController {
     
     var selectedItemPlacemark: MKPlacemark?
     
+    var route: MKRoute!
+    
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -195,13 +197,20 @@ extension HomeVC: MKMapViewDelegate {
             return annotationView
         }
         
-        
-        
         return nil
     }
     
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
         centerMapBtn.fadeTo(alphaValue: 1.0, withDuration: 0.2)
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let lineRenderer = MKPolylineRenderer(overlay: self.route.polyline)
+        
+        lineRenderer.strokeColor = UIColor(red: 216/255, green: 71/255, blue: 30/255, alpha: 0.75)
+        lineRenderer.lineWidth = 3
+        
+        return lineRenderer
     }
     
     func performSearch() {
@@ -244,6 +253,30 @@ extension HomeVC: MKMapViewDelegate {
         let annotation = MKPointAnnotation()
         annotation.coordinate = placemark.coordinate
         mapView.addAnnotation(annotation)
+    }
+    
+    func searchMapKitForResultsWithPolyline(forMapItem mapItem: MKMapItem) {
+        
+        let request = MKDirectionsRequest()
+        request.source = MKMapItem.forCurrentLocation()
+        request.destination = mapItem
+        
+        request.transportType = MKDirectionsTransportType.automobile
+        
+        let directions = MKDirections(request: request)
+        
+        directions.calculate { (response, error) in
+            
+            guard let response = response else {
+                print(error!.localizedDescription)
+                return
+            }
+            
+            self.route = response.routes.first
+            
+            self.mapView.add(self.route.polyline)
+            
+        }
     }
     
 }
@@ -354,6 +387,8 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         DataService.instance.REF_USERS.child((DataService.instance.currentUser?.uid)!).updateChildValues(["tripCoordinate": [selectedMapItem.placemark.coordinate.latitude, selectedMapItem.placemark.coordinate.longitude]])
         
         dropPinFor(placemark: selectedMapItem.placemark)
+        
+        searchMapKitForResultsWithPolyline(forMapItem: selectedMapItem)
         
         animateTableView(shouldShow: false)
         print("Selected")
