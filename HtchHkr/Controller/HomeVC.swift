@@ -30,10 +30,13 @@ class HomeVC: UIViewController {
     
     let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "launchScreenIcon")!, iconInitialSize: CGSize.init(width: 80, height: 80), backgroundColor: UIColor.white)
     
+    let tableView = UITableView()
+    
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        destinationTextField.delegate = self
         
         locationManager.delegate = self
 
@@ -177,8 +180,92 @@ extension HomeVC: MKMapViewDelegate {
     }
 }
 
+// MARK: - UITextFieldDelegate
+extension HomeVC: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        tableView.frame = CGRect(x: 20, y: view.frame.height, width: view.frame.width - 40, height: view.frame.height - 170)
+        tableView.layer.cornerRadius = 5.0
+        tableView.clipsToBounds = true
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "LocationCell")
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.tag = 18
+        tableView.rowHeight = 60
+        
+        view.addSubview(tableView)
+        
+        animateTableView(shouldShow: true)
+        
+        UIView.animate(withDuration: 0.2) {
+            self.destinationCircle.backgroundColor = UIColor.red
+            self.destinationCircle.borderColor = UIColor(red: 199/255.0, green: 0, blue: 0, alpha: 1.0)
+        }
+    }
+    
+    func animateTableView(shouldShow: Bool) {
+        if shouldShow {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.tableView.frame = CGRect(x: 20, y: 170, width: self.view.frame.width - 40, height: self.view.frame.height - 170)
+            })
+        } else {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.tableView.frame = CGRect(x: 20, y: self.view.frame.height, width: self.view.frame.width - 40, height: self.view.frame.height - 170)
 
+            }, completion: { (finished) in
+                if let tableView = self.view.viewWithTag(18) {
+                    tableView.removeFromSuperview()
+                }
+            })
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == destinationTextField {
+            view.endEditing(true)
+        }
+        
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if textField == destinationTextField && textField.text == "" {
+            
+            UIView.animate(withDuration: 0.2) {
+                self.destinationCircle.backgroundColor = UIColor.lightGray
+                self.destinationCircle.borderColor = UIColor.darkGray
+            }
+        }
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        centerMapOnUserLocation()
+        return true
+    }
+}
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
+extension HomeVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        animateTableView(shouldShow: false)
+        print("Selected")
+    }
+    
+}
 
 
 
