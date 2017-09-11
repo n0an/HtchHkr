@@ -99,6 +99,29 @@ class HomeVC: UIViewController, Alertable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        DataService.instance.REF_TRIPS.observe(.childRemoved, with: { (removedTripSnapshot) in
+            let removedTripDict = removedTripSnapshot.value as? [String: AnyObject]
+            if removedTripDict?[DRIVER_KEY] != nil {
+                DataService.instance.REF_DRIVERS.child(removedTripDict?[DRIVER_KEY] as! String).updateChildValues([DRIVER_IS_ON_TRIP: false])
+            }
+            
+            DataService.instance.userIsDriver(userKey: (DataService.instance.currentUser?.uid)!, handler: { (isDriver) in
+                if isDriver == true {
+                    self.removeOverlaysAndAnnotations(forDrivers: false, forPassengers: true)
+                } else {
+                    self.cancelBtn.fadeTo(alphaValue: 0.0, withDuration: 0.2)
+                    self.actionBtn.animateButton(shouldLoad: false, withMessage: MSG_REQUEST_RIDE)
+                    
+                    self.destinationTextField.isUserInteractionEnabled = true
+                    self.destinationTextField.text = ""
+                    
+                    self.removeOverlaysAndAnnotations(forDrivers: false, forPassengers: true)
+                    self.centerMapOnUserLocation()
+                }
+            })
+        })
+        
+        
         DataService.instance.driverIsAvailable(key: (DataService.instance.currentUser?.uid)!) { isDriverAvailable in
             
             guard let isDriverAvailable = isDriverAvailable else { return }
@@ -211,6 +234,30 @@ class HomeVC: UIViewController, Alertable {
     
     @IBAction func menuBtnWasPressed(_ sender: Any) {
         delegate?.toggleLeftPanel()
+    }
+    
+    @IBAction func cancelBtnWasPressed(_ sender: Any) {
+        
+        DataService.instance.driverIsOnTrip(driverKey: (DataService.instance.currentUser?.uid)!) { (isOnTrip, driverKey, tripKey) in
+            if isOnTrip == true {
+                UpdateService.instance.cancelTrip(withPassengerKey: tripKey!, forDriverKey: driverKey!)
+            }
+        }
+        
+        DataService.instance.passengerIsOnTrip(passengerKey: (DataService.instance.currentUser?.uid)!) { (isOnTrip, driverKey, tripKey) in
+            if isOnTrip == true {
+                UpdateService.instance.cancelTrip(withPassengerKey: (DataService.instance.currentUser?.uid)!, forDriverKey: driverKey!)
+            } else {
+                // TODO: - delete this line
+                UpdateService.instance.cancelTrip(withPassengerKey: (DataService.instance.currentUser?.uid)!, forDriverKey: nil)
+                
+                
+                self.removeOverlaysAndAnnotations(forDrivers: false, forPassengers: true)
+                self.centerMapOnUserLocation()
+            }
+        }
+        
+        self.actionBtn.isUserInteractionEnabled = true
     }
     
     @IBAction func centerMapBtnWasPressed(_ sender: Any) {
@@ -404,6 +451,34 @@ extension HomeVC: MKMapViewDelegate {
         
         region = mapView.regionThatFits(region)
         mapView.setRegion(region, animated: true)
+    }
+    
+    
+    func removeOverlaysAndAnnotations(forDrivers: Bool?, forPassengers: Bool?) {
+        
+        for annotation in mapView.annotations {
+            if let annotation = annotation as? MKPointAnnotation {
+                mapView.removeAnnotation(annotation)
+            }
+            
+            if forPassengers! {
+                if let annotation = annotation as? PassengerAnnotation {
+                    mapView.removeAnnotation(annotation)
+                }
+            }
+            
+            if forDrivers! {
+                if let annotation = annotation as? DriverAnnotation {
+                    mapView.removeAnnotation(annotation)
+                }
+            }
+        }
+        
+        for overlay in mapView.overlays {
+            if overlay is MKPolyline {
+                mapView.remove(overlay)
+            }
+        }
     }
     
 }
