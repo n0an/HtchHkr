@@ -26,7 +26,7 @@ class LoginVC: UIViewController, UITextFieldDelegate, Alertable {
         self.view.addGestureRecognizer(tap)
     }
     
-    func handleScreenTap(sender: UITapGestureRecognizer) {
+    @objc func handleScreenTap(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
     
