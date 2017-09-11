@@ -26,6 +26,8 @@
 		155ABE611F62C30C007B7FC3 /* RoundedCornerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155ABE601F62C30C007B7FC3 /* RoundedCornerTextField.swift */; };
 		1585263C1F62D1C300E0F291 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1585263B1F62D1C000E0F291 /* GoogleService-Info.plist */; };
 		1585263F1F62D32C00E0F291 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1585263E1F62D32C00E0F291 /* DataService.swift */; };
+		15D6AEA91F66760600CEDC7E /* PickupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D6AEA81F66760600CEDC7E /* PickupVC.swift */; };
+		15D6AEAB1F66763C00CEDC7E /* RoundMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D6AEAA1F66763C00CEDC7E /* RoundMapView.swift */; };
 		1837E1BB1F646A510059EE79 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1837E1BA1F646A510059EE79 /* UIViewController.swift */; };
 		18C2858C1F64530E00DF5456 /* PassengerAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2858B1F64530E00DF5456 /* PassengerAnnotation.swift */; };
 		18FF50E11F632F1400BBB5EA /* UpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FF50E01F632F1400BBB5EA /* UpdateService.swift */; };
@@ -56,6 +58,8 @@
 		155ABE601F62C30C007B7FC3 /* RoundedCornerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerTextField.swift; sourceTree = "<group>"; };
 		1585263B1F62D1C000E0F291 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1585263E1F62D32C00E0F291 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		15D6AEA81F66760600CEDC7E /* PickupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupVC.swift; sourceTree = "<group>"; };
+		15D6AEAA1F66763C00CEDC7E /* RoundMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundMapView.swift; sourceTree = "<group>"; };
 		1837E1BA1F646A510059EE79 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		18C2858B1F64530E00DF5456 /* PassengerAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengerAnnotation.swift; sourceTree = "<group>"; };
 		18FF50E01F632F1400BBB5EA /* UpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateService.swift; sourceTree = "<group>"; };
@@ -123,6 +127,7 @@
 				155ABE521F62A41F007B7FC3 /* LeftSidePanelVC.swift */,
 				155ABE541F62A539007B7FC3 /* ContainerVC.swift */,
 				155ABE5C1F62C269007B7FC3 /* LoginVC.swift */,
+				15D6AEA81F66760600CEDC7E /* PickupVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -138,6 +143,7 @@
 				155ABE601F62C30C007B7FC3 /* RoundedCornerTextField.swift */,
 				18FF50E61F63E73300BBB5EA /* DriverAnnotation.swift */,
 				18C2858B1F64530E00DF5456 /* PassengerAnnotation.swift */,
+				15D6AEAA1F66763C00CEDC7E /* RoundMapView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -339,6 +345,8 @@
 				155ABE551F62A539007B7FC3 /* ContainerVC.swift in Sources */,
 				155ABE361F6294C0007B7FC3 /* HomeVC.swift in Sources */,
 				1585263F1F62D32C00E0F291 /* DataService.swift in Sources */,
+				15D6AEAB1F66763C00CEDC7E /* RoundMapView.swift in Sources */,
+				15D6AEA91F66760600CEDC7E /* PickupVC.swift in Sources */,
 				155ABE4B1F629C0B007B7FC3 /* RoundImageView.swift in Sources */,
 				155ABE4D1F629C99007B7FC3 /* RoundedShadowView.swift in Sources */,
 				1837E1BB1F646A510059EE79 /* UIViewController.swift in Sources */,
