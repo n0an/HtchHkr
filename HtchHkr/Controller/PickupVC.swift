@@ -39,7 +39,7 @@ class PickupVC: UIViewController {
             if tripSnapshot.exists() {
                 // check for acceptance
                 
-                if tripSnapshot.childSnapshot(forPath: "tripIsAccepted").value as? Bool == true {
+                if tripSnapshot.childSnapshot(forPath: TRIP_IS_ACCEPTED).value as? Bool == true {
                     self.dismiss(animated: true, completion: nil)
                 }
                 

@@ -9,136 +9,87 @@
 import UIKit
 import Firebase
 
-class LoginVC: UIViewController, Alertable {
+class LoginVC: UIViewController, UITextFieldDelegate, Alertable {
     
-    // MARK: - OUTLETS
     @IBOutlet weak var emailField: RoundedCornerTextField!
     @IBOutlet weak var passwordField: RoundedCornerTextField!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var authBtn: RoundedShadowButton!
     
-    // MARK: - OUTLETS
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        emailField.delegate = self
+        passwordField.delegate = self
         view.bindtoKeyboard()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleScreenTap(sender:)))
-        view.addGestureRecognizer(tap)
-        
-        emailField.delegate = self
-        passwordField.delegate = self
+        self.view.addGestureRecognizer(tap)
     }
     
-    // MARK: - OUTLETS
-    @objc func handleScreenTap(sender: UITapGestureRecognizer) {
+    func handleScreenTap(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
     
-    // MARK: - OUTLETS
     @IBAction func cancelBtnWasPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func authBtnWasPressed(_ sender: Any) {
-        guard let email = emailField.text, let password = passwordField.text else { return }
-        
-        authBtn.animateButton(shouldLoad: true, withMessage: nil)
-        self.view.endEditing(true)
-        
-        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
+        if emailField.text != nil && passwordField.text != nil {
+            authBtn.animateButton(shouldLoad: true, withMessage: nil)
+            self.view.endEditing(true)
             
-            if let error = error, let errorCode = FIRAuthErrorCode(rawValue: error._code) {
-                
-                
-                switch errorCode {
-                case .errorCodeInvalidEmail:
-                    self.showAlert("Email invalid")
-                    return
-                case .errorCodeEmailAlreadyInUse:
-                    self.showAlert("Email already in use")
-                    return
-                case .errorCodeWrongPassword:
-                    self.showAlert("Wrong password")
-                    return
-                default:
-                    self.showAlert("An unexpected error")
-                }
-                
-                
-                print(error.localizedDescription)
-                
-                
-                
-                // CREATE USER
-                FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
-                    if let error = error, let errorCode = FIRAuthErrorCode(rawValue: error._code) {
-                        switch errorCode {
-                        case .errorCodeEmailAlreadyInUse:
-                            self.showAlert("Email already in use")
-                            return
-                        default:
-                            self.showAlert("An unexpected error")
+            if let email = emailField.text, let password = passwordField.text {
+                FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
+                    if error == nil {
+                        if let user = user {
+                            if self.segmentedControl.selectedSegmentIndex == 0 {
+                                let userData = ["provider": user.providerID] as [String: Any]
+                                DataService.instance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: false)
+                            } else {
+                                let userData = ["provider": user.providerID, USER_IS_DRIVER: true, ACCOUNT_PICKUP_MODE_ENABLED: false, DRIVER_IS_ON_TRIP: false] as [String: Any]
+                                DataService.instance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: true)
+                            }
+                        }
+                        self.dismiss(animated: true, completion: nil)
+                    } else {
+                        if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
+                            switch errorCode {
+                            case .errorCodeWrongPassword:
+                                self.showAlert(ERROR_MSG_WRONG_PASSWORD)
+                            default:
+                                self.showAlert(ERROR_MSG_UNEXPECTED_ERROR)
+                            }
                         }
                         
-                    } else {
-                        if let user = user {
-                            var userData = ["provider": user.providerID] as [String: Any]
-                            var isDriver: Bool
-                            
-                            if self.segmentedControl.selectedSegmentIndex == 0 {
-                                isDriver = false
+                        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
+                            if error != nil {
+                                if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
+                                    switch errorCode {
+                                    case .errorCodeInvalidEmail:
+                                        self.showAlert(ERROR_MSG_INVALID_EMAIL)
+                                    default:
+                                        self.showAlert(ERROR_MSG_UNEXPECTED_ERROR)
+                                    }
+                                }
                             } else {
-                                isDriver = true
-                                
-                                userData.updateValue(true, forKey: "userIsDriver")
-                                userData.updateValue(false, forKey: "isPickupModeEnabled")
-                                userData["driverIsOnTrip"] = false
+                                if let user = user {
+                                    if self.segmentedControl.selectedSegmentIndex == 0 {
+                                        let userData = ["provider": user.providerID] as [String: Any]
+                                        DataService.instance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: false)
+                                    } else {
+                                        let userData = ["provider": user.providerID, USER_IS_DRIVER: true, ACCOUNT_PICKUP_MODE_ENABLED: false, DRIVER_IS_ON_TRIP: false] as [String: Any]
+                                        DataService.instance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: true)
+                                    }
+                                }
+                                self.dismiss(animated: true, completion: nil)
                             }
-                            
-                            DataService.instance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: isDriver)
-                        }
-                        print("Sign in success")
-                        self.dismiss(animated: true, completion: nil)
+                        })
                     }
                 })
-                
-                
-            } else {
-                // SIGN IN USER
-                if let user = user {
-                    var userData = ["provider": user.providerID] as [String: Any]
-                    var isDriver: Bool
-                    
-                    if self.segmentedControl.selectedSegmentIndex == 0 {
-                        isDriver = false
-                    } else {
-                        isDriver = true
-                        
-                        userData.updateValue(true, forKey: "userIsDriver")
-                        userData.updateValue(false, forKey: "isPickupModeEnabled")
-                        userData["driverIsOnTrip"] = false
-                    }
-                    
-                    DataService.instance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: isDriver)
-                }
-                
-                print("Sign in success")
-                self.dismiss(animated: true, completion: nil)
             }
-            
-            
-        })
-        
-        
+        }
     }
-    
-}
-
-
-// MARK: - UITextFieldDelegate
-extension LoginVC: UITextFieldDelegate {
-    
 }
 
 

@@ -90,9 +90,9 @@ class HomeVC: UIViewController, Alertable {
         UpdateService.instance.observeTrips { tripDict in
             
             if let tripDict = tripDict {
-                let pickupCoordinateArray = tripDict["pickupCoordinate"] as! NSArray
-                let tripKey = tripDict["passengerKey"] as! String
-                let acceptanceStatus = tripDict["tripIsAccepted"] as! Bool
+                let pickupCoordinateArray = tripDict[USER_PICKUP_COORDINATE] as! NSArray
+                let tripKey = tripDict[USER_PASSENGER_KEY] as! String
+                let acceptanceStatus = tripDict[TRIP_IS_ACCEPTED] as! Bool
                 
                 if acceptanceStatus == false {
                     
@@ -418,7 +418,7 @@ class HomeVC: UIViewController, Alertable {
             if let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
                 for user in userSnapshot {
                     if user.key == DataService.instance.currentUser?.uid {
-                        if user.hasChild("tripCoordinate") {
+                        if user.hasChild(TRIP_COORDINATE) {
                             self.zoom(toFitAnnotationsFromMapView: self.mapView, forActiveTripWithDriver: false, withKey: nil)
 
                             
@@ -499,7 +499,7 @@ extension HomeVC: MKMapViewDelegate {
             view.image = UIImage(named: ANNO_PICKUP)
             return view
         } else if let annotation = annotation as? MKPointAnnotation {
-            let identifier = "destination"
+            let identifier = REGION_DESTINATION
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
             if annotationView == nil {
                 annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
@@ -717,7 +717,7 @@ extension HomeVC: UITextFieldDelegate {
         tableView.layer.cornerRadius = 5.0
         tableView.clipsToBounds = true
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "LocationCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: CELL_LOCATION)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -778,7 +778,7 @@ extension HomeVC: UITextFieldDelegate {
         matchingItems = []
         tableView.reloadData()
         
-        DataService.instance.REF_USERS.child((DataService.instance.currentUser?.uid)!).child("tripCoordinate").removeValue()
+        DataService.instance.REF_USERS.child((DataService.instance.currentUser?.uid)!).child(TRIP_COORDINATE).removeValue()
         
         mapView.removeOverlays(mapView.overlays)
         
@@ -804,7 +804,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "locationCell")
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: CELL_LOCATION)
         
         let mapItem = matchingItems[indexPath.row]
         
@@ -826,7 +826,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         destinationTextField.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
         
         let selectedMapItem = matchingItems[indexPath.row]
-        DataService.instance.REF_USERS.child((DataService.instance.currentUser?.uid)!).updateChildValues(["tripCoordinate": [selectedMapItem.placemark.coordinate.latitude, selectedMapItem.placemark.coordinate.longitude]])
+        DataService.instance.REF_USERS.child((DataService.instance.currentUser?.uid)!).updateChildValues([TRIP_COORDINATE: [selectedMapItem.placemark.coordinate.latitude, selectedMapItem.placemark.coordinate.longitude]])
         
         dropPinFor(placemark: selectedMapItem.placemark)
         

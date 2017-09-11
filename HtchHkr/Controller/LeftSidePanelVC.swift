@@ -42,7 +42,7 @@ class LeftSidePanelVC: UIViewController {
             userEmailLbl.text = ""
             userAccountTypeLbl.text = ""
             userImageView.isHidden = true
-            loginOutBtn.setTitle("Sign Up / Login", for: .normal)
+            loginOutBtn.setTitle(MSG_SIGN_UP_SIGN_IN, for: .normal)
         } else {
             userEmailLbl.text = FIRAuth.auth()?.currentUser?.email
             userAccountTypeLbl.text = ""
@@ -60,7 +60,7 @@ class LeftSidePanelVC: UIViewController {
                 
                 for snap in snapshotObjects {
                     if snap.key == FIRAuth.auth()?.currentUser?.uid {
-                        self.userAccountTypeLbl.text = "Passenger"
+                        self.userAccountTypeLbl.text = ACCOUNT_TYPE_PASSENGER
                         
                         self.currentUserUid = FIRAuth.auth()?.currentUser?.uid
                     }
@@ -74,10 +74,10 @@ class LeftSidePanelVC: UIViewController {
                 
                 for snap in snapshotObjects {
                     if snap.key == FIRAuth.auth()?.currentUser?.uid {
-                        self.userAccountTypeLbl.text = "Driver"
+                        self.userAccountTypeLbl.text = ACCOUNT_TYPE_DRIVER
                         self.pickupModeSwitch.isHidden = false
                         
-                        let switchStatus = snap.childSnapshot(forPath: "isPickupModeEnabled").value as! Bool
+                        let switchStatus = snap.childSnapshot(forPath: ACCOUNT_PICKUP_MODE_ENABLED).value as! Bool
                         self.pickupModeSwitch.isOn = switchStatus
                         self.pickupModeLbl.isHidden = false
                         
@@ -96,11 +96,11 @@ class LeftSidePanelVC: UIViewController {
     @IBAction func switchWasToggled(_ sender: Any) {
         
         if pickupModeSwitch.isOn {
-            pickupModeLbl.text = "PICKUP MODE ENABLED"
-            DataService.instance.REF_DRIVERS.child(currentUserUid!).updateChildValues(["isPickupModeEnabled": true])
+            pickupModeLbl.text = MSG_PICKUP_MODE_ENABLED
+            DataService.instance.REF_DRIVERS.child(currentUserUid!).updateChildValues([ACCOUNT_PICKUP_MODE_ENABLED: true])
         } else {
-            pickupModeLbl.text = "PICKUP MODE DISABLED"
-            DataService.instance.REF_DRIVERS.child(currentUserUid!).updateChildValues(["isPickupModeEnabled": false])
+            pickupModeLbl.text = MSG_PICKUP_MODE_DISABLED
+            DataService.instance.REF_DRIVERS.child(currentUserUid!).updateChildValues([ACCOUNT_PICKUP_MODE_ENABLED: false])
         }
         appDelegate.menuContainerVC.toggleLeftPanel()
 
@@ -125,7 +125,7 @@ class LeftSidePanelVC: UIViewController {
                 pickupModeLbl.text = ""
                 pickupModeSwitch.isHidden = true
                 
-                loginOutBtn.setTitle("Sign Up / Login", for: .normal)
+                loginOutBtn.setTitle(MSG_SIGN_UP_SIGN_IN, for: .normal)
                 
                 currentUserUid = nil
                 

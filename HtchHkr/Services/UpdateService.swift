@@ -19,7 +19,7 @@ class UpdateService {
             if let userObjects = snapshot.children.allObjects as? [FIRDataSnapshot] {
                 for user in userObjects {
                     if user.key == FIRAuth.auth()?.currentUser?.uid {
-                        DataService.instance.REF_USERS.child(user.key).updateChildValues(["coordinate": [coordinate.latitude, coordinate.longitude]])
+                        DataService.instance.REF_USERS.child(user.key).updateChildValues([COORDINATE: [coordinate.latitude, coordinate.longitude]])
                     }
                 }
             }
@@ -32,8 +32,8 @@ class UpdateService {
                 for driver in driverObjects {
                     if driver.key == FIRAuth.auth()?.currentUser?.uid {
                         
-                        if driver.childSnapshot(forPath: "isPickupModeEnabled").value as? Bool == true {
-                            DataService.instance.REF_DRIVERS.child(driver.key).updateChildValues(["coordinate": [coordinate.latitude, coordinate.longitude]])
+                        if driver.childSnapshot(forPath: ACCOUNT_PICKUP_MODE_ENABLED).value as? Bool == true {
+                            DataService.instance.REF_DRIVERS.child(driver.key).updateChildValues([COORDINATE: [coordinate.latitude, coordinate.longitude]])
                         }
                         
                     }
@@ -48,7 +48,7 @@ class UpdateService {
             
             if let tripSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
                 for trip in tripSnapshot {
-                    if trip.hasChild("passengerKey") && trip.hasChild("tripIsAccepted") {
+                    if trip.hasChild(USER_PASSENGER_KEY) && trip.hasChild(TRIP_IS_ACCEPTED) {
                         if let tripDict = trip.value as? [String: Any] {
                             handler(tripDict)
                         }
@@ -64,18 +64,18 @@ class UpdateService {
             if let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
                 for user in userSnapshot {
                     if user.key == FIRAuth.auth()?.currentUser?.uid {
-                        if !user.hasChild("userIsDriver") {
+                        if !user.hasChild(USER_IS_DRIVER) {
                             if let userDict = user.value as? [String: Any] {
                                 
-                                let pickupArray = userDict["coordinate"] as! NSArray
+                                let pickupArray = userDict[COORDINATE] as! NSArray
                                 
-                                let distinationArray = userDict["tripCoordinate"] as! NSArray
+                                let distinationArray = userDict[TRIP_COORDINATE] as! NSArray
                                 
                                 let dict: [String: Any] = [
-                                    "pickupCoordinate": [pickupArray[0], pickupArray[1]],
-                                    "destinationCoordinate": [distinationArray[0], distinationArray[1]],
-                                    "passengerKey": user.key,
-                                    "tripIsAccepted": false
+                                    USER_PICKUP_COORDINATE: [pickupArray[0], pickupArray[1]],
+                                    USER_DESTINATION_COORDINATE: [distinationArray[0], distinationArray[1]],
+                                    USER_PASSENGER_KEY: user.key,
+                                    TRIP_IS_ACCEPTED: false
                                 ]
                                 
                                 DataService.instance.REF_TRIPS.child(user.key).updateChildValues(dict)
@@ -91,12 +91,12 @@ class UpdateService {
     func acceptTrip(withPassengerKey passengerKey: String, forDirverKey driverKey: String) {
         
         let dict: [String: Any] = [
-            "driverKey": driverKey,
-            "tripIsAccepted": true
+            DRIVER_KEY: driverKey,
+            TRIP_IS_ACCEPTED: true
         ]
         
         DataService.instance.REF_TRIPS.child(passengerKey).updateChildValues(dict)
-        DataService.instance.REF_DRIVERS.child(driverKey).updateChildValues(["driverIsOnTrip": true])
+        DataService.instance.REF_DRIVERS.child(driverKey).updateChildValues([DRIVER_IS_ON_TRIP: true])
         
         
     }
