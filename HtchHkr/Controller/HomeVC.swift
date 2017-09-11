@@ -402,9 +402,6 @@ class HomeVC: UIViewController, Alertable {
             if isOnTrip == true {
                 UpdateService.instance.cancelTrip(withPassengerKey: (DataService.instance.currentUser?.uid)!, forDriverKey: driverKey!)
             } else {
-                // TODO: - delete this line
-                UpdateService.instance.cancelTrip(withPassengerKey: (DataService.instance.currentUser?.uid)!, forDriverKey: nil)
-                
                 
                 self.removeOverlaysAndAnnotations(forDrivers: false, forPassengers: true)
                 self.centerMapOnUserLocation()
@@ -441,13 +438,13 @@ class HomeVC: UIViewController, Alertable {
 
 }
 
+// MARK: - CLLocationManagerDelegate
 
 extension HomeVC: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
         if status == .authorizedAlways {
-            checkLocationAuthStatus()
             
             mapView.showsUserLocation = true
             mapView.userTrackingMode = .follow
@@ -534,33 +531,23 @@ extension HomeVC: MKMapViewDelegate {
     func performSearch() {
         matchingItems.removeAll()
         let request = MKLocalSearchRequest()
-        
         request.naturalLanguageQuery = destinationTextField.text
         request.region = mapView.region
         
         let search = MKLocalSearch(request: request)
         
         search.start { (response, error) in
-            
-            guard error == nil else {
-                print(error!.localizedDescription)
-                self.showAlert(error!.localizedDescription)
-                self.shouldPresentLoadingView(false)
-                return
-            }
-            
-            if response?.mapItems.count == 0 {
-                self.showAlert("no results")
-                
+            if error != nil {
+                self.showAlert(ERROR_MSG_UNEXPECTED_ERROR)
+            } else if response!.mapItems.count == 0 {
+                self.showAlert(ERROR_MSG_NO_MATCHES_FOUND)
             } else {
-                for mapItem in (response?.mapItems)! {
+                for mapItem in response!.mapItems {
                     self.matchingItems.append(mapItem as MKMapItem)
                     self.tableView.reloadData()
-                    
+                    self.shouldPresentLoadingView(false)
                 }
             }
-            self.shouldPresentLoadingView(false)
-            
         }
     }
     
