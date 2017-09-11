@@ -45,6 +45,28 @@ class DataService {
             REF_USERS.child(uid).updateChildValues(userData)
         }
     }
+    
+    func driverIsAvailable(key: String, handler: @escaping (_ status: Bool?)->()) {
+        DataService.instance.REF_DRIVERS.observeSingleEvent(of: .value) { (snapshot) in
+            
+            if let driverSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                
+                for driver in driverSnapshot {
+                    if driver.key == key {
+                        if driver.childSnapshot(forPath: "isPickupModeEnabled").value as? Bool == true {
+                            if driver.childSnapshot(forPath: "driverIsOnTrip").value as? Bool == true {
+                                handler(false)
+                            } else {
+                                handler(true)
+                            }
+                        }
+                    }
+                }
+                
+            }
+            
+        }
+    }
 
 }
 

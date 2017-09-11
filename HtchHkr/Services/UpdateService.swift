@@ -35,11 +35,57 @@ class UpdateService {
                         if driver.childSnapshot(forPath: "isPickupModeEnabled").value as? Bool == true {
                             DataService.instance.REF_DRIVERS.child(driver.key).updateChildValues(["coordinate": [coordinate.latitude, coordinate.longitude]])
                         }
-                    
+                        
                     }
                 }
             }
         }
+    }
+    
+    func observeTrips(handler: @escaping (_ coordinateDict: [String: Any]?) -> Void) {
+        
+        DataService.instance.REF_TRIPS.observe(.value) { (snapshot) in
+            
+            if let tripSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                for trip in tripSnapshot {
+                    if trip.hasChild("passengerKey") && trip.hasChild("tripIsAccepted") {
+                        if let tripDict = trip.value as? [String: Any] {
+                            handler(tripDict)
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    func updateTripsWithCoordinatesUpnRequest() {
+        DataService.instance.REF_USERS.observeSingleEvent(of: .value) { (snapshot) in
+            if let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                for user in userSnapshot {
+                    if user.key == FIRAuth.auth()?.currentUser?.uid {
+                        if !user.hasChild("userIsDriver") {
+                            if let userDict = user.value as? [String: Any] {
+                                
+                                let pickupArray = userDict["coordinate"] as! NSArray
+                                
+                                let distinationArray = userDict["tripCoordinate"] as! NSArray
+                                
+                                let dict: [String: Any] = [
+                                    "pickupCoordinate": [pickupArray[0], pickupArray[1]],
+                                    "destinationCoordinate": [distinationArray[0], distinationArray[1]],
+                                    "passengerKey": user.key,
+                                    "tripIsAccepted": false
+                                ]
+                                
+                                DataService.instance.REF_TRIPS.child(user.key).updateChildValues(dict)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
     }
     
 }

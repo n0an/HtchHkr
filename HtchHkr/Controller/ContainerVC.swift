@@ -197,4 +197,8 @@ extension UIStoryboard {
     class func loginVC() -> LoginVC? {
         return mainStoryboard().instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
     }
+    
+    class func pickupVC() -> PickupVC? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "PickupVC") as? PickupVC
+    }
 }

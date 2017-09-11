@@ -56,7 +56,6 @@ class HomeVC: UIViewController, Alertable {
         DataService.instance.REF_DRIVERS.observe(.value, with: { (snapshot) in
             self.loadDriverAnnotationsFromFB()
 
-
         })
 
         
@@ -66,6 +65,35 @@ class HomeVC: UIViewController, Alertable {
         
         revealingSplashView.heartAttack = true
         
+        UpdateService.instance.observeTrips { tripDict in
+            
+            if let tripDict = tripDict {
+                let pickupCoordinateArray = tripDict["pickupCoordinate"] as! NSArray
+                let tripKey = tripDict["passengerKey"] as! String
+                let acceptanceStatus = tripDict["tripIsAccepted"] as! Bool
+                
+                if acceptanceStatus == false {
+                    
+                    DataService.instance.driverIsAvailable(key: (DataService.instance.currentUser?.uid)!, handler: { (available) in
+                        
+                        guard let available = available else { return }
+                        
+                        if available {
+                            
+                            let pickupVC = UIStoryboard.pickupVC()
+                            
+                            pickupVC?.initData(coordinate: CLLocationCoordinate2D(latitude: pickupCoordinateArray[0] as! CLLocationDegrees, longitude: pickupCoordinateArray[1] as! CLLocationDegrees), passengerKey: tripKey)
+                            
+                            
+                            self.present(pickupVC!, animated: true, completion: nil)
+
+                        }
+                    })
+                    
+                }
+            }
+            
+        }
     }
    
     
@@ -131,8 +159,14 @@ class HomeVC: UIViewController, Alertable {
 
     // MARK: - ACTIONS
     @IBAction func actionBtnWasPressed(_ sender: Any) {
-//        buttonSelector(forAction: actionForButton)
+        
+        UpdateService.instance.updateTripsWithCoordinatesUpnRequest()
+        
         actionBtn.animateButton(shouldLoad: true, withMessage: nil)
+        
+        self.view.endEditing(true)
+        
+        destinationTextField.isUserInteractionEnabled = false
     }
     
     @IBAction func menuBtnWasPressed(_ sender: Any) {
