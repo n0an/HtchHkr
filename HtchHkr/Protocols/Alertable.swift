@@ -8,6 +8,7 @@
 
 import UIKit
 
+// !!!IMPORTANT!!!
 protocol Alertable {}
 
 extension Alertable where Self: UIViewController {

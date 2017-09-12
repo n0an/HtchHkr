@@ -8,6 +8,7 @@
 
 import UIKit
 
+// ***SOLUTION***
 extension UIView {
     func fadeTo(alphaValue: CGFloat, withDuration duration: TimeInterval) {
         UIView.animate(withDuration: duration) {
@@ -18,6 +19,9 @@ extension UIView {
     func bindtoKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
+    
+    // TO USE:
+    // In LoginVC, in viewDidLoad(): view.bindToKeyboard()
     
     @objc func keyboardWillChange(_ notification: NSNotification) {
         let duration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! Double

@@ -8,6 +8,7 @@
 
 import UIKit
 
+// ***SOLUTION***
 class RoundedCornerTextField: UITextField {
 
     var textRectOffset: CGFloat = 20

@@ -8,6 +8,7 @@
 
 import UIKit
 
+// ***SOLUTION***
 class RoundedShadowButton: UIButton {
 
     var originalSize: CGRect?
@@ -68,12 +69,7 @@ class RoundedShadowButton: UIButton {
                 
                 
             })
-            
-//            for subview in self.subviews {
-//                if subview.tag == 21 {
-//                    subview.removeFromSuperview()
-//                }
-//            }
+        
             
         }
     }

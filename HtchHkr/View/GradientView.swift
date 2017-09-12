@@ -8,6 +8,7 @@
 
 import UIKit
 
+// ***SOLUTION***
 class GradientView: UIView {
 
     let gradient = CAGradientLayer()

@@ -8,6 +8,7 @@
 
 import UIKit
 
+// ***SOLUTION***
 extension UIViewController {
     func shouldPresentLoadingView(_ status: Bool) {
         var fadeView: UIView?

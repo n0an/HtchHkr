@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRApp.configure()
         
+        // ===TOUSE===
         containerVC = ContainerVC()
         
         window?.rootViewController = containerVC
