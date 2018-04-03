@@ -40,7 +40,7 @@ class LoginVC: UIViewController, UITextFieldDelegate, Alertable {
             self.view.endEditing(true)
             
             if let email = emailField.text, let password = passwordField.text {
-                FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
+                Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
                     if error == nil {
                         if let user = user {
                             if self.segmentedControl.selectedSegmentIndex == 0 {
@@ -53,20 +53,20 @@ class LoginVC: UIViewController, UITextFieldDelegate, Alertable {
                         }
                         self.dismiss(animated: true, completion: nil)
                     } else {
-                        if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
+                        if let errorCode = AuthErrorCode(rawValue: error!._code) {
                             switch errorCode {
-                            case .errorCodeWrongPassword:
+                            case .wrongPassword:
                                 self.showAlert(ERROR_MSG_WRONG_PASSWORD)
                             default:
                                 self.showAlert(ERROR_MSG_UNEXPECTED_ERROR)
                             }
                         }
                         
-                        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
+                        Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
                             if error != nil {
-                                if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
+                                if let errorCode = AuthErrorCode(rawValue: error!._code) {
                                     switch errorCode {
-                                    case .errorCodeInvalidEmail:
+                                    case .invalidEmail:
                                         self.showAlert(ERROR_MSG_INVALID_EMAIL)
                                     default:
                                         self.showAlert(ERROR_MSG_UNEXPECTED_ERROR)

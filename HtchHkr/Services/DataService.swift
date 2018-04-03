@@ -9,32 +9,32 @@
 import Foundation
 import Firebase
 
-let DB_BASE = FIRDatabase.database().reference()
+let DB_BASE = Database.database().reference()
 
 
 class DataService {
     static let instance = DataService()
     
-    let currentUser = FIRAuth.auth()?.currentUser
+    let currentUser = Auth.auth().currentUser
     
     private var _REF_BASE = DB_BASE
     private var _REF_USERS = DB_BASE.child("Users")
     private var _REF_DRIVERS = DB_BASE.child("Drivers")
     private var _REF_TRIPS = DB_BASE.child("Trips")
     
-    var REF_BASE: FIRDatabaseReference {
+    var REF_BASE: DatabaseReference {
         return _REF_BASE
     }
     
-    var REF_USERS: FIRDatabaseReference {
+    var REF_USERS: DatabaseReference {
         return _REF_USERS
     }
     
-    var REF_DRIVERS: FIRDatabaseReference {
+    var REF_DRIVERS: DatabaseReference {
         return _REF_DRIVERS
     }
     
-    var REF_TRIPS: FIRDatabaseReference {
+    var REF_TRIPS: DatabaseReference {
         return _REF_TRIPS
     }
     
@@ -49,7 +49,7 @@ class DataService {
     func driverIsAvailable(key: String, handler: @escaping (_ status: Bool?)->()) {
         DataService.instance.REF_DRIVERS.observeSingleEvent(of: .value) { (snapshot) in
             
-            if let driverSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+            if let driverSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 
                 for driver in driverSnapshot {
                     if driver.key == key {
@@ -77,7 +77,7 @@ class DataService {
                 if driverTripStatusSnapshot == true {
                     DataService.instance.REF_TRIPS.observeSingleEvent(of: .value, with: { (tripSnapshot) in
                         
-                        if let tripSnapshot = tripSnapshot.children.allObjects as? [FIRDataSnapshot] {
+                        if let tripSnapshot = tripSnapshot.children.allObjects as? [DataSnapshot] {
                             for trip in tripSnapshot {
                                 
                                 if trip.childSnapshot(forPath: DRIVER_KEY).value as? String == driverKey {
@@ -103,7 +103,7 @@ class DataService {
     func passengerIsOnTrip(passengerKey: String, handler: @escaping (_ status: Bool?, _ driverKey: String?, _ tripKey: String?) -> Void) {
         
         DataService.instance.REF_TRIPS.observeSingleEvent(of: .value) { (tripSnapshot) in
-            if let tripSnapshot = tripSnapshot.children.allObjects as? [FIRDataSnapshot] {
+            if let tripSnapshot = tripSnapshot.children.allObjects as? [DataSnapshot] {
                 for trip in tripSnapshot {
                     if trip.key == passengerKey {
                         if trip.childSnapshot(forPath: TRIP_IS_ACCEPTED).value as? Bool == true {
@@ -126,7 +126,7 @@ class DataService {
         
         DataService.instance.REF_DRIVERS.observeSingleEvent(of: .value) { (driverSnapshot) in
             
-            if let driverSnapshot = driverSnapshot.children.allObjects as? [FIRDataSnapshot] {
+            if let driverSnapshot = driverSnapshot.children.allObjects as? [DataSnapshot] {
                 
                 for driver in driverSnapshot {
                     if driver.key == userKey {

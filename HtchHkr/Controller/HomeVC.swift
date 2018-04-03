@@ -155,7 +155,7 @@ class HomeVC: UIViewController, Alertable {
             DataService.instance.driverIsOnTrip(driverKey: (DataService.instance.currentUser?.uid)!, handler: { (isOnTrip, driverKey, tripKey) in
                 if isOnTrip == true {
                     DataService.instance.REF_TRIPS.observeSingleEvent(of: .value, with: { (tripSnapshot) in
-                        if let tripSnapshot = tripSnapshot.children.allObjects as? [FIRDataSnapshot] {
+                        if let tripSnapshot = tripSnapshot.children.allObjects as? [DataSnapshot] {
                             for trip in tripSnapshot {
                                 if trip.childSnapshot(forPath: DRIVER_KEY).value as? String == (DataService.instance.currentUser?.uid)! {
                                     let pickupCoordinatesArray = trip.childSnapshot(forPath: USER_PICKUP_COORDINATE).value as! NSArray
@@ -210,7 +210,7 @@ class HomeVC: UIViewController, Alertable {
     
     func loadDriverAnnotationsFromFB() {
         DataService.instance.REF_DRIVERS.observeSingleEvent(of: .value, with: { (snapshot) in
-            if let driverSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+            if let driverSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for driver in driverSnapshot {
                     if driver.hasChild(COORDINATE) {
                         if driver.childSnapshot(forPath: ACCOUNT_PICKUP_MODE_ENABLED).value as? Bool == true {
@@ -415,7 +415,7 @@ class HomeVC: UIViewController, Alertable {
         
         DataService.instance.REF_USERS.observeSingleEvent(of: .value) { (snapshot) in
             
-            if let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+            if let userSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for user in userSnapshot {
                     if user.key == DataService.instance.currentUser?.uid {
                         if user.hasChild(TRIP_COORDINATE) {
